@@ -78,9 +78,9 @@ def generate_type1_aivdm():
     payload_int = int(payload_bits, 2)
     payload = to_six_bit_ascii(payload_int, 168)
 
-    sentence = f"!AIVDM,1,1,,A,{payload},0"
+    sentence = f"!AIVDM,1,1,,A,{payload},0*"
     checksum = calculate_checksum(sentence)
-    return f"{sentence}*{checksum}\r\n"
+    return f"{sentence}{checksum}\n"
 
 # Generate 100 sentences and save to file
 with open("ais_test_sentences.txt", "w") as f:

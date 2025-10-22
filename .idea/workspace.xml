@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8fd12-0828-4782-98dd-ddef541acc9b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/PythonProject.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AIS_SENDER.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AIS_generator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AIS_valid.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/serial_tester.py" afterDir="false" />
+    <list default="true" id="e3f8fd12-0828-4782-98dd-ddef541acc9b" name="Changes" comment="AIS generator works after fixing all 6-bit conversion problems.&#10;still there is some mismatch between validator and generator. - need to find out why some endings dont have enough bits.">
+      <change afterPath="$PROJECT_DIR$/tester-parse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AIS_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/AIS_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/serial_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/serial_tester.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +38,7 @@
     "Python.AIS_generator.executor": "Run",
     "Python.AIS_valid.executor": "Run",
     "Python.serial_tester.executor": "Run",
+    "Python.tester-parse.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -53,7 +49,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "settings.editor.selected.configurable": "debugger.dataViews.python.type.renderers",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -75,9 +71,43 @@
       <workItem from="1751377991659" duration="1344000" />
       <workItem from="1758804205430" duration="215000" />
     </task>
+    <task id="LOCAL-00001" summary="AIS generator works after fixing all 6-bit conversion problems.&#10;still there is some mismatch between validator and generator. - need to find out why some endings dont have enough bits.">
+      <option name="closed" value="true" />
+      <created>1759154417263</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1759154417263</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="AIS generator works after fixing all 6-bit conversion problems.&#10;still there is some mismatch between validator and generator. - need to find out why some endings dont have enough bits." />
+    <option name="LAST_COMMIT_MESSAGE" value="AIS generator works after fixing all 6-bit conversion problems.&#10;still there is some mismatch between validator and generator. - need to find out why some endings dont have enough bits." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/tester-parse.py</url>
+          <line>141</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AIS_generator.py</url>
+          <line>87</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="checksum" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
