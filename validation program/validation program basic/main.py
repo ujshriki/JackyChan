@@ -1,6 +1,7 @@
 import utime
 from Constants import *
 from machine import UART, Pin
+from Lead_Removal_Module import Extract_Sentence
 
 # === Checksum Validator ===
 # calculates the checksum of the packet
@@ -21,6 +22,7 @@ def Is_Checksum_Valid(packet, fields):
         checksum = checksum ^ ord(ch)
     
     if not (checksum == original_checksum):
+        print("invalid checksum")
         return STATUS_INVALID
     
     return STATUS_FIELD_VALID
@@ -44,7 +46,7 @@ def Pack_Auth_vali_Check_Basic(packet):
         return STATUS_INVALID
     
     # compares the start of sentance in the packet with the valid start of sentance in AIS packets
-    if not (packet.startswith(VALID_START_OF_SENTANCE_A) or packet.startswith(VALID_START_OF_SENTANCE_B)): ######################## Maayan, please remember to make sure that both are valid and not just one
+    if not (packet.startswith("!") or packet.startswith("$")): ######################## Maayan, please remember to make sure that both are valid and not just one
         return STATUS_INVALID
     
     try:
@@ -90,24 +92,82 @@ def Pack_Auth_vali_Check_Basic(packet):
     return STATUS_SINGLE_OK
 
 
-def main():
-    uart = UART(0, baudrate=9600, tx=Pin(TRANCEIVE_PIN), rx=Pin(RECEIVE_PIN))
+def clean_packet(packet):
+    decodeable_packet =""
     
+    index = 0
+    while index < len(packet):
+        try:
+            return packet[index:-1].decode()
+        except:
+            index += 1
+    return ""
+
+
+def main():
+    uart0 = UART(0, baudrate=38400, bits=8, parity=None, stop=1, tx=Pin(0), rx=Pin(1), invert=UART.INV_RX)
+    uart1 = UART(1, baudrate=38400, bits=8, parity=None, stop=1, tx=Pin(4), rx=Pin(5), invert=UART.INV_TX)
     try:
         while(True):
-            if uart.any():
-                packet = uart.read().decode()
-                print(packet)
-                status = Pack_Auth_vali_Check_Basic(packet)
-                print(status)
-                if status is STATUS_SINGLE_OK:
-                    uart.write(packet.encode())
+            try:
+                if uart0.any():
+                    packet = uart0.read()
+                    print(packet)
+                    try:
+                        packet = packet.decode()
+                        try:
+                            packet = packet.strip()
+                        except: print("failed to strip packet")
+                        print(packet)
+                    except Exception as e:
+                        print("failed to decode packet", e)
+                        packet = Extract_Sentence(packet).strip()
+                        print(packet)
+                    status = Pack_Auth_vali_Check_Basic(packet)
+                    print(status)
+                    uart1.write(packet.encode())
+                    uart1.write("\r\n".encode())
+                    #if status is STATUS_SINGLE_OK:
+                        #uart1.write(packet.encode())
+            except Exception as e:
+                print("error?", e)
+                raise(e)
     except Exception as e:
         print("at end error", e)
+        raise(e)
                     
 
-if __name__ == "__main__":
-    main()
+
+while True:
+    led = machine.Pin(25, Pin.OUT)
+    led.value(1)
+    try:
+        main()
+    except Exception as e:
+        raise(e)
+        print("error", e)
+        for i in range(0,3):
+            led.value(1)
+            utime.sleep(0.3)
+            led.value(0)
+            utime.sleep(1)
+    machine.reset()
+
+
+# if __name__ == "__main__":
+#     while True:
+#         led = machine.Pin(25, Pin.OUT)
+#         led.value(1)
+#         try:
+#             main()
+#         except Exception as e:
+#             raise(e)
+#             print("error", e)
+#             for i in range(0,3):
+#                 led.value(1)
+#                 utime.sleep(0.3)
+#                 led.value(0)
+#                 utime.sleep(1)
 
 """if __name__ == "__main__":
     try:
