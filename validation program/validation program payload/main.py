@@ -6,8 +6,7 @@ from Payload_Validation_Module import Is_Message_Valid
 from Debug_Module import DBG_Print
 from machine import UART, Pin
 
-structure_json_folder = "/MSG_Struct/"
-valid_values_json_folder = "/MSG_Valid_Value/"
+
 
 
 
@@ -15,24 +14,33 @@ valid_values_json_folder = "/MSG_Valid_Value/"
 # then i need to find some solution
 
 def main():
-    uart = UART(0, baudrate=9600, tx=Pin(TRANCEIVE_PIN), rx=Pin(RECEIVE_PIN))
-    
+    uart = UART(0, baudrate=38400, tx=Pin(TRANCEIVE_PIN), rx=Pin(RECEIVE_PIN))
+    uart1 = UART(1, baudrate=38400, tx=Pin(4), rx=Pin(5))
+    log_file = open("log.txt", 'w')
     Load_Msg_Struct_Dicts(structure_json_folder)
     Load_Msg_Type_Valid_Values_Dicts(valid_values_json_folder)
-    message_file = open("ais_test_sentences.txt", 'r')
+    DBG_Print("\n\n\n")
+    DBG_Print(MSG_TYPE_PARSE_LISTS_DICTIONARY)
+    DBG_Print("\n\n\n")
+    DBG_Print(MSG_TYPE_VALID_VALUES_LISTS_DICTIONARY)
+    
     while True:
         try:
-            for message in message_file:
-                message.strip()
-                message = message.split(',') # extract the payload, could be changed so that the basic validator program will send just the payload
+            if uart.any():
+                message_og = uart.read().decode()
+                DBG_Print(message_og)
+                log_file.write(message_og)
+                message_og.strip()
+                message = message_og.split(',') # extract the payload, could be changed so that the basic validator program will send just the payload
                 DBG_Print("inside main")
                 DBG_Print('\n')
+                DBG_Print(message)
                 msg_bitstring = Decode_Msg_To_Bitstring(message[5], int(message[6].split('*')[0]))
                 msg_fields = Seperate_Msg_Fields(msg_bitstring)
                 Is_Message_Valid(msg_fields)
+                uart1.write(message_og)
                 print('\n')
                 print("===================MESSAGE VALID!!!!!!================")
-                utime.sleep(10000000)
             """
             if uart.any():
                 #message = uart.read().decode()
@@ -48,12 +56,44 @@ def main():
                 Is_Message_Valid(msg_fields)
                 utime.sleep(10000)"""
         except Exception as e:
+            log_file.close()
             print("at end error")
             print(e)
             print('\n')
-            raise(e)
 
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     while True:
+#         led = machine.Pin(25, Pin.OUT)
+#         led.value(1)
+#         try:
+#             main()
+#         except Exception as e:
+#             raise(e)
+#             print("error", e)
+#             for i in range(0,3):
+#                 led.value(1)
+#                 utime.sleep(0.3)
+#                 led.value(0)
+#                 utime.sleep(1)
+#        led.value(0)
+
+
+
+while True:
+    led = machine.Pin(25, Pin.OUT)
+    led.value(1)
+    try:
+        main()
+    except Exception as e:
+        raise(e)
+        print("error", e)
+        for i in range(0,3):
+            led.value(1)
+            utime.sleep(0.3)
+            led.value(0)
+            utime.sleep(1)
+    led.value(0)
+
+

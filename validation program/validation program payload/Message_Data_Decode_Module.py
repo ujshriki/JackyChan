@@ -1,6 +1,10 @@
 from Constants import *
 from Debug_Module import DBG_Print
-from Load_JSON_Module import MSG_TYPE_PARSE_LISTS_DICTIONARY
+from Load_JSON_Module import MSG_TYPE_PARSE_LISTS_DICTIONARY, Get_Field_Order, DEFAULT_MSG_TYPE_PART, LENGTH, TYPE, MSG_PART_IS as MSG_PART
+
+FIELD_ORDER_FILE_PRE_MSG_TYPE = "message"
+FIELD_ORDER_FILE_POST_MSG_TYPE = "structorder.txt"
+
 
 # gets the message type and returns it
 # gets the message type from a decoded bitstring and returns it as a char
@@ -10,9 +14,11 @@ def Get_Msg_Type(payload_bitstring):
     DBG_Print('\n')
     return str(int(payload_bitstring[0:6], 2))
 
+
 # gets a bitstring and returns the integer value of it
 def Bitstr_To_UInt(bitstr):
     return int(bitstr, 2) # returns the integer of the bitstring given
+
 
 # gets a bitstring and returns the signed integer value of it
 # if negetive it returs the negetive number the bitstring represents
@@ -110,40 +116,8 @@ def Parse_Field(field_name, bitstring_slice, value_type):
         DBG_Print('\n')
         raise(Exception)
 
+
 """ temporarily in comments
-# === Parse Message ===
-# devides the bitstring into fields based on the message type
-# returns the fields containing the field's name, the binary of the value and the converted value
-def Parse_Message(payload_bitstring, msg_type):
-    payload_fields = []
-    DBG_Print("Inside Parse_Message")
-    DBG_Print(payload_bitstring)
-    DBG_Print(msg_type)
-    DBG_Print('\n')
-    try:
-        # splits the bitstring based on the length of each field for this message type
-        curr_pos = 0
-        
-        for field_name, field_len, value_type in MSG_TYPE_PARSE_LISTS_DICTIONARY[msg_type]:
-            payload_fields.append(Parse_Field(field_name, payload_bitstring[curr_pos:curr_pos+field_len-1], value_type))
-            
-            # differentiate message type 24A and message type 24B
-            if msg_type == STATIC_DATA_REPORT_KEY and field_name == STATIC_DATA_REPORT_A_B_FIELD:
-                if payload_fields[-1][-1] == STATIC_DATA_REPORT_PART_A:
-                    msg_type = STATIC_DATA_REPORT_KEY
-                elif payload_fields[-1][-1] == STATIC_DATA_REPORT_PART_A:
-                    msg_type = STATIC_DATA_REPORT_KEY_B
-                else:
-                    raise(Exception) # value of this field must be one of the two
-            
-            curr_pos += curr_field_len
-    except:
-        DBG_Print('\n')
-        raise(Exception)
-        
-    return payload_fields"""
-
-
 # === Parse Message ===
 # devides the bitstring into fields based on the message type
 # returns the fields containing the field's name, the binary of the value and the converted value
@@ -194,6 +168,83 @@ def Parse_Message(payload_bitstring, msg_type):
         DBG_Print('\n')
         raise(e)
         
+    return payload_fields"""
+
+
+# === Parse Message ===
+# devides the bitstring into fields based on the message type
+# returns the fields containing the field's name, the binary of the value and the converted value
+def Parse_Message(payload_bitstring, msg_type, key_ordered):
+    payload_fields = []
+    DBG_Print("Inside Parse_Message")
+    DBG_Print('\n')
+    try:
+        DBG_Print("message type structure dict")
+        DBG_Print(MSG_TYPE_PARSE_LISTS_DICTIONARY[msg_type])
+        
+        if not msg_type in list(MSG_TYPE_PARSE_LISTS_DICTIONARY.keys()):
+            DBG_Print("entry keys: ", list(MSG_TYPE_PARSE_LISTS_DICTIONARY.keys()))
+            DBG_Print("Error: msg type not recognised")
+            DBG_Print(msg_type)
+            DBG_Print('\n')
+            raise(Exception)
+        
+        DBG_Print("starting to parse message")
+        
+        
+        try:
+            DBG_Print("1")
+            # splits the bitstring based on the length of each field for this message type
+            curr_pos = 0 # start from beginning
+            field_len = 0 # placeholder value
+            value_type = INTEGER # placeholder value
+            field_name = "" # empty field name
+            msg_part = DEFAULT_MSG_TYPE_PART # default part
+            
+            while key_ordered: # goes throught all the field names specified in the key order list
+                field_name = key_ordered.pop(0)
+                field_len = MSG_TYPE_PARSE_LISTS_DICTIONARY[msg_type][msg_part][LENGTH]
+                value_type = MSG_TYPE_PARSE_LISTS_DICTIONARY[msg_type][msg_part][TYPE]
+                
+                field_tuple = Parse_Field(field_name, payload_bitstring[curr_pos:curr_pos+field_len], value_type)
+                
+                # differentiate message type 24A and message type 24B        
+                if field_name == MSG_PART:
+                    if field_tuple[2] == 0:
+                        presumed_msg_part = str(msg_type) + "A" 
+                    elif field_tuple[2] == 1:
+                        presumed_msg_part = str(msg_type) + "B"
+                    else:
+                        DBG_Print("Part outside of recognizable range")
+                        raise(Exception)
+                    
+                    if presumed_msg_part in MSG_TYPE_PARSE_LISTS_DICTIONARY[msg_type].keys():
+                        msg_part = presumed_msg_part
+                        new_key_ordered = Get_Field_Order(structure_json_folder, FIELD_ORDER_FILE_PRE_MSG_TYPE + msg_part + FIELD_ORDER_FILE_POST_MSG_TYPE)
+                        key_ordered = new_key_ordered[new_key_ordered.index(MSG_PART):]
+                    
+                
+                payload_fields.append(field_tuple)
+                DBG_Print("2")
+                
+                
+                curr_pos += field_len
+            DBG_Print(payload_fields)
+            DBG_Print('\n')
+        except Exception as e:
+            DBG_Print("field parsing failed")
+            DBG_Print(payload_fields)
+            DBG_Print(e)
+            DBG_Print('\n')
+            raise(e)
+    except Exception as e:
+        DBG_Print("message parsing failed")
+        DBG_Print(msg_type)
+        DBG_Print(MSG_TYPE_PARSE_LISTS_DICTIONARY)
+        DBG_Print(e)
+        DBG_Print('\n')
+        raise(e)
+        
     return payload_fields
 
 
@@ -204,7 +255,9 @@ def Seperate_Msg_Fields(payload_bitstring):
     DBG_Print("inside Seperate_Msg_Fields")
     DBG_Print('\n')
     try:
-        payload_fields = Parse_Message(payload_bitstring, Get_Msg_Type(payload_bitstring))
+        msg_type = Get_Msg_Type(payload_bitstring)
+        key_ordered = Get_Field_Order(structure_json_folder, FIELD_ORDER_FILE_PRE_MSG_TYPE + str(msg_type) + FIELD_ORDER_FILE_POST_MSG_TYPE)
+        payload_fields = Parse_Message(payload_bitstring, msg_type, key_ordered)
     except Exception as e:
         DBG_Print("Failed to seperate msg fields")
         DBG_Print(e)

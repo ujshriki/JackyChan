@@ -7,6 +7,10 @@ from micropython import const
 RECEIVE_PIN = 1
 TRANCEIVE_PIN = 0
 
+structure_json_folder = "/MSG_Struct/"
+valid_values_json_folder = "/MSG_Valid_Value/"
+
+
 # === Decoding and Message Data Verification Constants ===
 ASCII_CHAR_BASE_VALUE = 48
 AIS_TABLE_LIMIT = 39

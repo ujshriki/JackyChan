@@ -10,9 +10,9 @@ FIELD_ORDER_FIELD = "Field Order File Name"
 DEFAULT_MSG_TYPE_PART = "all parts"
 
 MESSAGE_TYPE = "Message Type"
-IS_MSG_DICT_A_PART = "Is a Part?"
-MSG_PART_IS = "Part"
-MSG_TYPE_OF_STRUCT = "Structure Of"
+IS_MSG_DICT_A_PART = "Is a Part?" # if the valid values definition dictionary represents a message type part
+MSG_PART_IS = "Part" # describes which message type part the definition represents
+MSG_TYPE_OF_STRUCT = "Structure Of" #
 
 RANGES = "Ranges"
 CHECK = "Check"
@@ -69,16 +69,107 @@ def Field_Dict_To_Tuple(dict_name, field_dict):
     return the_tuple
 
 
+# === Create Msg Type Struct List ===
+# receives 
 #
-#
-#
+def Create_Msg_Type_Struct_List(loaded_json_file, json_field_keys):
+    dict_key = 0
+    dict_part_key = DEFAULT_MSG_TYPE_PART
+    struct_dict = {}
+    
+    DBG_Print("new")
+    
+    try:        
+        # if the json doesn't start as expected
+        if json_field_keys[0] != MESSAGE_TYPE:
+            DBG_Print("no message type")
+            DBG_Print('\n')
+            raise(Exception)
+        
+        
+        # sets the message type as the dict key
+        dict_key = loaded_json_file[MESSAGE_TYPE][MESSAGE_TYPE]
+        # ensures the dict key is a string
+        if isinstance(dict_key, str):
+            dict_key = int(dict_key)
+            
+        
+        # if this json describes the valid values for a specific part for a message type
+        if not (loaded_json_file[MESSAGE_TYPE][MSG_PART_IS] == ""):
+            dict_part_key = str(dict_key) + loaded_json_file[MESSAGE_TYPE][MSG_PART_IS] # assemble the key for that message type+part combination
+        else:
+            dict_part_key = DEFAULT_MSG_TYPE_PART
+        
+        DBG_Print("\n passed part assignment \n")
+        
+        # if the message type has an entry in the dictionary
+        if dict_key in list(MSG_TYPE_PARSE_LISTS_DICTIONARY.keys()):
+            DBG_Print("works")
+            try:
+                # if there *is* an entry for this message type+part combination
+                if dict_part_key in list(MSG_TYPE_PARSE_LISTS_DICTIONARY[dict_key].keys()):
+                    DBG_Print("dict part error, dict creation")
+                    MSG_TYPE_PARSE_LISTS_DICTIONARY[dict_key][dict_part_key] = {}
+                    # don't add this to the dictionary
+                    raise(Exception) # exit the try:except statement
+            except Exception as e:
+                DBG_Print("code crash? error")
+                raise(e)
+        else:
+            DBG_Print("\ndict key no entry\n")
+            DBG_Print(MSG_TYPE_PARSE_LISTS_DICTIONARY)
+            MSG_TYPE_PARSE_LISTS_DICTIONARY[dict_key] = {}
+        
+        DBG_Print("\n passed check for if dict already exists")
+        
+        try:
+            # create the entry for the Message Type key in the new type+part combination entry
+            struct_dict[MESSAGE_TYPE] = {   TYPE: loaded_json_file[MESSAGE_TYPE][TYPE],
+                                            LENGTH: loaded_json_file[MESSAGE_TYPE][LENGTH]}
+        except Exception as e:
+            DBG_Print(e)
+            raise(e)
+        
+        try:
+            json_field_keys.pop(0)
+            # creating the dictionary object to be inserted into the global dictionary that describes the valid values for the fields of the message types
+            for field_key in json_field_keys:
+                struct_dict[field_key] = {  TYPE: loaded_json_file[field_key][TYPE],
+                                            LENGTH: loaded_json_file[field_key][LENGTH]}
+        except Exception as e:
+            DBG_Print(struct_dict)
+            DBG_Print("error is here")
+            DBG_Print(e)
+            DBG_Print("error is here")
+            raise(e)
+        DBG_Print("loaded json new dictonary entry")
+        DBG_Print(struct_dict)
+        DBG_Print('\n')
+        DBG_Print(dict_key)
+        DBG_Print(dict_part_key)
+        # add the entry for the message type+part combination to the dictionary
+        MSG_TYPE_PARSE_LISTS_DICTIONARY[dict_key][dict_part_key] = struct_dict
+    except Exception as e:
+        DBG_Print("Error: struct dict creation failed?")
+        DBG_Print('\n')
+        DBG_Print(struct_dict)
+        DBG_Print(dict_key)
+        DBG_Print(dict_part_key)
+        DBG_Print(e)
+        DBG_Print(MSG_TYPE_PARSE_LISTS_DICTIONARY)
+        raise(e)
+
+
+"""
 def Create_Msg_Type_Struct_List(loaded_json_file, json_field_keys):
     struct_list = []
     try:
         DBG_Print(loaded_json_file)
         DBG_Print('\n')
         
+        # ensures that the field message type exists and is in front
         if(json_field_keys[0] == MESSAGE_TYPE):
+            # add to the beginning of the list the structure entry for message type
             struct_list.append((MESSAGE_TYPE, loaded_json_file[MESSAGE_TYPE][LENGTH], loaded_json_file[MESSAGE_TYPE][TYPE]))
         else:
             DBG_Print("error: message type doesn't exist?")
@@ -86,15 +177,20 @@ def Create_Msg_Type_Struct_List(loaded_json_file, json_field_keys):
             DBG_Print('\n')
             raise(Exception)
         
+        # remove message type from the list of fields to be added to the structure list
         json_field_keys.pop(0)
+        # go over every field in the to-be-added list
         for field_key in json_field_keys:
+            #and add it's structure entry to the list
             struct_list.append(Field_Dict_To_Tuple(field_key, loaded_json_file[field_key]))
     except Exception as e:
         DBG_Print("Error in function Create_Msg_Type_Struct_List: field appending gone wrong?")
         DBG_Print(e)
         DBG_Print('\n')
         raise(Exception)
+    # add the structure list for this message type to the dictionary of structure lists
     MSG_TYPE_PARSE_LISTS_DICTIONARY[loaded_json_file[MESSAGE_TYPE][MSG_TYPE_OF_STRUCT]] = struct_list
+"""
 
 
 #
@@ -185,10 +281,6 @@ def Create_Msg_Type_Valid_Values_List(loaded_json_file, json_field_keys):
         else:
             MSG_TYPE_VALID_VALUES_LISTS_DICTIONARY[dict_key] = {}
         
-        # ensure that the field <CHECK> is a boolean true\false in <Message Type>
-        if not (loaded_json_file[MESSAGE_TYPE][CHECK] == True or loaded_json_file[MESSAGE_TYPE][CHECK] == False):
-            raise(Exception)
-        
         
         # create the entry for the Message Type key in the new type+part combination entry
         valid_values_dict[MESSAGE_TYPE] = {CHECK: loaded_json_file[MESSAGE_TYPE][CHECK],
@@ -200,6 +292,7 @@ def Create_Msg_Type_Valid_Values_List(loaded_json_file, json_field_keys):
         for field_key in json_field_keys:
             # ensure that the field <CHECK> is a boolean true\false
             if not (loaded_json_file[field_key][CHECK] == True or loaded_json_file[field_key][CHECK] == False):
+                DBG_Print("check error")
                 raise(Exception)
             
             valid_values_dict[field_key] = {CHECK: loaded_json_file[field_key][CHECK],

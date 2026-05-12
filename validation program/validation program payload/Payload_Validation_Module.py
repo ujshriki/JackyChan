@@ -1,5 +1,5 @@
 from Constants import *
-from Load_JSON_Module import MSG_TYPE_VALID_VALUES_LISTS_DICTIONARY as VALID_DICT, CHECK, MIN, MAX, DEFAULT_MSG_TYPE_PART as DEFAULT_PART, RANGES, VALUES, TYPE, MESSAGE_TYPE
+from Load_JSON_Module import MSG_TYPE_VALID_VALUES_LISTS_DICTIONARY as VALID_DICT, CHECK, MIN, MAX, DEFAULT_MSG_TYPE_PART as DEFAULT_PART, RANGES, VALUES, TYPE, MESSAGE_TYPE, MSG_PART_IS
 from Debug_Module import DBG_Print
 
 """ segmented_message_example_for_visualization = [ (field_name, value_type, value),
@@ -105,20 +105,30 @@ def Is_Message_Valid(segmented_msg):
         DBG_Print("post part check")
         segmented_msg.pop(0)
         try:
+            msg_part = DEFAULT_PART
             DBG_Print(segmented_msg)
             for field_name, value_type, field_value in segmented_msg:
+                if field_name == MSG_PART_IS:
+                    if field_value == 0:
+                        msg_part = str(msg_type) + "A" 
+                    elif field_value == 1:
+                        msg_part = str(msg_type) + "B"
+                    else:
+                        DBG_Print("Part outside of recognizable range")
+                        raise(Exception)
+                
                 DBG_Print("going through for loop")
                 DBG_Print(field_name)
                 DBG_Print(value_type)
                 DBG_Print(field_value)
-                if VALID_DICT[msg_type][DEFAULT_PART][field_name][CHECK]:
-                    if not VALIDATE_DATA_TYPE[value_type](field_value, VALID_DICT[msg_type][DEFAULT_PART][field_name][RANGES], VALID_DICT[msg_type][DEFAULT_PART][field_name][VALUES]):
+                if VALID_DICT[msg_type][msg_part][field_name][CHECK]:
+                    if not VALIDATE_DATA_TYPE[value_type](field_value, VALID_DICT[msg_type][msg_part][field_name][RANGES], VALID_DICT[msg_type][msg_part][field_name][VALUES]):
                         DBG_Print("field not valid")
                         DBG_Print(field_name)
                         DBG_Print(field_value)
                         DBG_Print(value_type)
-                        DBG_Print(VALID_DICT[msg_type][DEFAULT_PART][field_name][RANGES])
-                        DBG_Print(VALID_DICT[msg_type][DEFAULT_PART][field_name][VALUES])
+                        DBG_Print(VALID_DICT[msg_type][msg_part][field_name][RANGES])
+                        DBG_Print(VALID_DICT[msg_type][msg_part][field_name][VALUES])
                         DBG_Print('\n')
                         raise(Exception)
             DBG_Print("\n out of for loop")
