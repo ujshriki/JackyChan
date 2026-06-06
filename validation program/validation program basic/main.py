@@ -3,6 +3,7 @@ from Constants import *
 from machine import UART, Pin
 from Lead_Removal_Module import Extract_Sentence
 
+
 # === Checksum Validator ===
 # calculates the checksum of the packet
 # and compares it with the checksum attached to the packet
@@ -20,7 +21,9 @@ def Is_Checksum_Valid(packet, fields):
     # goes over each character and calculates the checksum. skips over the first character which is "!" and stops before the character "*" after which is the checksum of the packet
     for ch in packet[1:packet.find('*')]:
         checksum = checksum ^ ord(ch)
-    
+        print(ch)
+        print(checksum)
+    print("original checksum = ", original_checksum)
     if not (checksum == original_checksum):
         print("invalid checksum")
         return STATUS_INVALID
@@ -28,12 +31,26 @@ def Is_Checksum_Valid(packet, fields):
     return STATUS_FIELD_VALID
 
 
+
+
+
 # validates the fillbit, makes sure the fillbit is a valid value
 def Fillbit_Validation(fields):
-    if not int(fields[FIELD_FILLBIT_N_CHECKSUM][FIELD_FILLBIT]) in range(6):
-        print("Error, fillbit not in valid range 0-6 ", fields[FIELD_FILLBIT_N_CHECKSUM][FIELD_FILLBIT], '\n', fields[FIELD_FILLBIT_N_CHECKSUM])
+    try:
+        fillbit = int(fields[FIELD_FILLBIT_N_CHECKSUM][FIELD_FILLBIT], 10)
+    except:
+        return STATUS_INVALID
+    try:
+        if not fillbit in range(6):
+            print("Error, fillbit not in valid range 0-6 ", fillbit, '\n', fields[FIELD_FILLBIT_N_CHECKSUM])
+            return STATUS_INVALID
+    except:
+        print("ERROR, Unexpected error in the filbit validation check")
         return STATUS_INVALID
     return STATUS_FIELD_VALID
+
+
+
 
 
 # === Main function ===
@@ -45,14 +62,18 @@ def Pack_Auth_vali_Check_Basic(packet):
     if not isinstance(packet, str) or not packet: ########################## re-review this part later
         return STATUS_INVALID
     
+    
     # compares the start of sentance in the packet with the valid start of sentance in AIS packets
     if not (packet.startswith("!") or packet.startswith("$")): ######################## Maayan, please remember to make sure that both are valid and not just one
         return STATUS_INVALID
+    
     
     try:
         # splitting the packet into the different message fields
         fields = packet.split(',')
         try:
+            if fields[FIELD_FILLBIT_N_CHECKSUM].find('*') == -1:
+                raise(Exception)
             fields[FIELD_FILLBIT_N_CHECKSUM] = fields[FIELD_FILLBIT_N_CHECKSUM].split('*') # seperating the fillbit and the checksum
         except Exception as e:
             print(e)
@@ -61,6 +82,7 @@ def Pack_Auth_vali_Check_Basic(packet):
     except:
         print("Error while splitting packet into fields: error occured in Pack_Auth_vali_Check_Basic() ", fields)
         return STATUS_INVALID
+    
     # make sure the packet has the apropriate number of fields and that the checksum and fillbit were apropriately seperated
     if len(fields) < VALID_PACKET_FIELDS_NUM and len(fields[FIELD_FILLBIT_N_CHECKSUM]) is not FIELD_FILLBIT_N_CHECKSUM_LENGTH:
         return STATUS_INVALID
@@ -92,6 +114,9 @@ def Pack_Auth_vali_Check_Basic(packet):
     return STATUS_SINGLE_OK
 
 
+
+
+
 def clean_packet(packet):
     decodeable_packet =""
     
@@ -103,10 +128,13 @@ def clean_packet(packet):
             index += 1
     return ""
 
-
+"""
+bits=8, parity=None, stop=1, 
+bits=8, parity=None, stop=1, 
+"""
 def main():
-    uart0 = UART(0, baudrate=38400, bits=8, parity=None, stop=1, tx=Pin(0), rx=Pin(1), invert=UART.INV_RX)
-    uart1 = UART(1, baudrate=38400, bits=8, parity=None, stop=1, tx=Pin(4), rx=Pin(5), invert=UART.INV_TX)
+    uart0 = UART(0, baudrate=38400, tx=Pin(0), rx=Pin(1), invert=UART.INV_RX)
+    uart1 = UART(1, baudrate=38400, tx=Pin(4), rx=Pin(5), invert=UART.INV_TX)
     try:
         while(True):
             try:
@@ -119,16 +147,13 @@ def main():
                             packet = packet.strip()
                         except: print("failed to strip packet")
                         print(packet)
-                    except Exception as e:
-                        print("failed to decode packet", e)
+                    except:
                         packet = Extract_Sentence(packet).strip()
                         print(packet)
                     status = Pack_Auth_vali_Check_Basic(packet)
                     print(status)
-                    uart1.write(packet.encode())
-                    uart1.write("\r\n".encode())
-                    #if status is STATUS_SINGLE_OK:
-                        #uart1.write(packet.encode())
+                    if status is STATUS_SINGLE_OK:
+                        uart1.write(packet.encode())
             except Exception as e:
                 print("error?", e)
                 raise(e)
@@ -137,23 +162,22 @@ def main():
         raise(e)
                     
 
-
 while True:
     led = machine.Pin(25, Pin.OUT)
     led.value(1)
     try:
         main()
     except Exception as e:
-        raise(e)
         print("error", e)
-        for i in range(0,3):
-            led.value(1)
-            utime.sleep(0.3)
-            led.value(0)
-            utime.sleep(1)
-    machine.reset()
+#         for i in range(0,3):
+#             led.value(1)
+#             utime.sleep(0.3)
+#             led.value(0)
+#             utime.sleep(1)
+#         raise(e)
 
 
+machine.reset()
 # if __name__ == "__main__":
 #     while True:
 #         led = machine.Pin(25, Pin.OUT)
