@@ -1,0 +1,108 @@
+{
+	"Field Order File Name":"message3validvaluesorder.txt",
+	
+	"Message Type":{
+		"Check": true,
+		"Message Type": 3,
+		"Is a Part?": false,
+		"Part": ""},
+	
+	"Repeat Indicator":{
+		"Check":true,
+		"Type":"u_int",
+		"Ranges":[{"min": 0, "max": 3}],
+		"Values":[]},
+		
+	"MMSI":{
+		"Check":true,
+		"Type":"u_int",
+		"Ranges":[
+			{"min": 0, "max": 9999999},
+			{"min": 111000000, "max": 111999999},
+			{"min": 201000000, "max": 775999999},
+			{"min": 810000000, "max": 819999999},
+			{"min": 970000000, "max": 970999999},
+			{"min": 972000000, "max": 972999999},
+			{"min": 974000000, "max": 974999999},
+			{"min": 980000000, "max": 989999999},
+			{"min": 990000000, "max": 999999999}],
+		"Values":[]},
+
+	"Navigation Status":{
+		"Check":false,
+		"Type":"u_int",
+		"Ranges":[{"min": 0, "max": 15}],
+		"Values":[]},
+
+	"Rate of Turn":{
+		"Check":true,
+		"Type":"int",
+		"Ranges":[{"min": -128, "max": 127}],
+		"Values":[]},
+		
+	"Speed Over Ground":{
+		"Check":false,
+		"Type":"u_int",
+		"Ranges":[{"min": 0, "max": 1022}],
+		"Values":[]},
+	
+	"Position Accuracy":{
+		"Check":true,
+		"Type":"bool",
+		"Ranges":[],
+		"Values":[0, 1]},
+	
+	"Longitude":{
+		"Check":true,
+		"Type":"int",
+		"Ranges":[{"min": -1080000000, "max": 1080000000}],
+		"Values":[]},
+	
+	"Latitude":{
+		"Check":true,
+		"Type":"int",
+		"Ranges":[{"min": -54000000, "max": 54000000}],
+		"Values":[]},
+	
+	"Course Over Ground":{
+		"Check":true,
+		"Type":"u_int",
+		"Ranges":[{"min": 0, "max": 3599}],
+		"Values":[]},
+	
+	"True Heading":{
+		"Check":true,
+		"Type":"u_int",
+		"Ranges":[{"min": 0, "max": 359}],
+		"Values":[511]},
+	
+	"Time Stamp":{
+		"Check":false,
+		"Type":"u_int",
+		"Ranges":[{"min": 0, "max": 59}],
+		"Values":[60, 61, 62, 63]},
+	
+	"Maneuver Indicator":{
+		"Check":true,
+		"Type":"u_int",
+		"Ranges":[],
+		"Values":[0, 1, 2, 3]},
+	
+	"Spare":{
+		"Check":false,
+		"Type":"u_int",
+		"Ranges":[],
+		"Values":[0]},
+	
+	"RAIM flag":{
+		"Check":false,
+		"Type":"bool",
+		"Ranges":[],
+		"Values":[0, 1]},
+	
+	"Radio status":{
+		"Check":false,
+		"Type":"u_int",
+		"Ranges":[],
+		"Values":[]}
+}

@@ -1,0 +1,22 @@
+{
+	"Field Order File Name":"message24structorder.txt",
+	
+	"Message Type": {
+		"Type": "u_int",
+		"Length": 6,
+		"Message Type": 24,
+		"Part": "",
+		"Message Type Has Parts": ["A", "B"] },
+	
+	"Repeat Indicator": {
+		"Type": "u_int",
+		"Length": 2},
+
+	"MMSI": {
+		"Type": "u_int",
+		"Length": 30},
+	
+	"Part": {
+		"Type": "u_int",
+		"Length": 2}
+}

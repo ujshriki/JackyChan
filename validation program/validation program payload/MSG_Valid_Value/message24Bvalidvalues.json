@@ -1,0 +1,90 @@
+{
+	"Field Order File Name":"message24Bvalidvaluesorder.txt",
+	
+	"Message Type":{
+		"Check": true,
+		"Message Type": 24,
+		"Is a Part?": true,
+		"Part": "B"},
+	
+	"Repeat Indicator":{
+		"Check":true,
+		"Type":"u_int",
+		"Ranges":[{"min": 0, "max": 3}],
+		"Values":[]},
+		
+	"MMSI":{
+		"Check":true,
+		"Type":"u_int",
+		"Ranges":[
+			{"min": 0, "max": 9999999},
+			{"min": 111000000, "max": 111999999},
+			{"min": 201000000, "max": 775999999},
+			{"min": 810000000, "max": 819999999},
+			{"min": 970000000, "max": 970999999},
+			{"min": 972000000, "max": 972999999},
+			{"min": 974000000, "max": 974999999},
+			{"min": 980000000, "max": 989999999},
+			{"min": 990000000, "max": 999999999}],
+		"Values":[]},
+	
+	"Part": {
+		"Check":true,
+		"Type": "u_int",
+		"Ranges":[],
+		"Values":[0, 1]},
+	
+	"Ship Type": {
+		"Check":true,
+		"Type": "u_int",
+		"Ranges":[{"min": 0, "max": 99}],
+		"Values":[]},
+	
+	"Vendor ID": {
+		"Check":false,
+		"Type": "str",
+		"Ranges":[],
+		"Values":[]},
+	
+	"Call Sign": {
+		"Check":false,
+		"Type": "str",
+		"Ranges":[],
+		"Values":[]},
+	
+	"DtB": {
+		"Check":true,
+		"Type": "u_int",
+		"Ranges":[{"min": 0, "max": 511}],
+		"Values":[]},
+		
+	"DtS": {
+		"Check":true,
+		"Type": "u_int",
+		"Ranges":[{"min": 0, "max": 511}],
+		"Values":[]},
+	
+	"DtP": {
+		"Check":true,
+		"Type": "u_int",
+		"Ranges":[{"min": 0, "max": 63}],
+		"Values":[]},
+	
+	"DtSB": {
+		"Check":true,
+		"Type": "u_int",
+		"Ranges":[{"min": 0, "max": 63}],
+		"Values":[]},
+	
+	"Mothership MMSI": {
+		"Check":true,
+		"Type": "u_int",
+		"Ranges":[{"min": 100000000, "max": 999999999}],
+		"Values":[0]},
+	
+	"Spare": {
+		"Check":true,
+		"Type": "u_int",
+		"Ranges":[],
+		"Values":[0]}
+}

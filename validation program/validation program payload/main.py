@@ -14,8 +14,8 @@ from machine import UART, Pin
 # then i need to find some solution
 
 def main():
-    uart = UART(0, baudrate=38400, tx=Pin(TRANCEIVE_PIN), rx=Pin(RECEIVE_PIN))
-    uart1 = UART(1, baudrate=38400, tx=Pin(4), rx=Pin(5))
+    uart = UART(0, baudrate=38400, tx=Pin(TRANCEIVE_PIN), rx=Pin(RECEIVE_PIN), invert=UART.INV_RX)
+    uart1 = UART(1, baudrate=38400, tx=Pin(4), rx=Pin(5), invert=UART.INV_TX)
     log_file = open("log.txt", 'w')
     Load_Msg_Struct_Dicts(structure_json_folder)
     Load_Msg_Type_Valid_Values_Dicts(valid_values_json_folder)
@@ -27,8 +27,13 @@ def main():
     while True:
         try:
             if uart.any():
-                message_og = uart.read().decode()
+                message_og = uart.read()
                 DBG_Print(message_og)
+                try:
+                    message_og = message_og.decode()
+                except Exception as e:
+                    DBG_Print(e)
+                    DBG_Print("decode fail")
                 log_file.write(message_og)
                 message_og.strip()
                 message = message_og.split(',') # extract the payload, could be changed so that the basic validator program will send just the payload
@@ -38,7 +43,8 @@ def main():
                 msg_bitstring = Decode_Msg_To_Bitstring(message[5], int(message[6].split('*')[0]))
                 msg_fields = Seperate_Msg_Fields(msg_bitstring)
                 Is_Message_Valid(msg_fields)
-                uart1.write(message_og)
+                #uart1.write(message_og)
+                uart1.write((message_og+"\r\n").encode())
                 print('\n')
                 print("===================MESSAGE VALID!!!!!!================")
             """
@@ -87,13 +93,13 @@ while True:
     try:
         main()
     except Exception as e:
-        raise(e)
-        print("error", e)
         for i in range(0,3):
             led.value(1)
             utime.sleep(0.3)
             led.value(0)
             utime.sleep(1)
-    led.value(0)
+        print("error", e)
+        #raise(e)
+
 
 

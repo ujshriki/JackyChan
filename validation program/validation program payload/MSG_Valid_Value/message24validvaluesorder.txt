@@ -1,0 +1,4 @@
+Message Type
+Repeat Indicator
+MMSI
+Part

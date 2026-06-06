@@ -1,0 +1,58 @@
+{
+	"Field Order File Name":"message24Bstructorder.txt",
+	
+	"Message Type": {
+		"Type": "u_int",
+		"Length": 6,
+		"Message Type": 24,
+		"Part": "B",
+		"Message Type Has Parts": [] },
+	
+	"Repeat Indicator": {
+		"Type": "u_int",
+		"Length": 2},
+
+	"MMSI": {
+		"Type": "u_int",
+		"Length": 30},
+	
+	"Part": {
+		"Type": "u_int",
+		"Length": 2},
+	
+	"Ship Type": {
+		"Type": "u_int",
+		"Length": 8},
+	
+	"Vendor ID": {
+		"Type": "str",
+		"Length": 18},
+	
+	"Call Sign": {
+		"Type": "str",
+		"Length": 42},
+	
+	"DtB": {
+		"Type": "u_int",
+		"Length": 9},
+		
+	"DtS": {
+		"Type": "u_int",
+		"Length": 9},
+	
+	"DtP": {
+		"Type": "u_int",
+		"Length": 6},
+	
+	"DtSB": {
+		"Type": "u_int",
+		"Length": 6},
+	
+	"Mothership MMSI": {
+		"Type": "u_int",
+		"Length": 30},
+	
+	"Spare": {
+		"Type": "u_int",
+		"Length": 6}
+}
