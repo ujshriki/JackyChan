@@ -1,0 +1,16 @@
+Message Type
+Repeat Indicator
+MMSI
+Navigation Status
+Rate of Turn
+Speed Over Ground
+Position Accuracy
+Longitude
+Latitude
+Course Over Ground
+True Heading
+Time Stamp
+Maneuver Indicator
+Spare
+RAIM flag
+Radio status

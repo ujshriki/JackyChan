@@ -1,0 +1,6 @@
+Message Type
+Repeat Indicator
+MMSI
+Part
+Vessel Name
+Spare

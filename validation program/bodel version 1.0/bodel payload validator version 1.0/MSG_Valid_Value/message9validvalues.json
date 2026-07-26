@@ -1,0 +1,117 @@
+{
+	"Field Order File Name": "message9validvaluesorder.txt",
+
+	"Message Type": {
+		"Check": true,
+		"Message Type": 9,
+		"Is a Part?": false,
+		"Part": ""
+	},
+
+	"Repeat Indicator": {
+		"Check": true,
+		"Type": "u_int",
+		"Ranges": [{"min": 0, "max": 3}],
+		"Values": []
+	},
+
+	"MMSI": {
+		"Check": true,
+		"Type": "u_int",
+		"Ranges": [
+			{"min": 111000000, "max": 111999999}
+		],
+		"Values": []
+	},
+
+	"Altitude": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [{"min": 0, "max": 4094}],
+		"Values": [4095]
+	},
+
+	"Speed Over Ground": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [{"min": 0, "max": 1022}],
+		"Values": [1023]
+	},
+
+	"Position Accuracy": {
+		"Check": true,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Longitude": {
+		"Check": true,
+		"Type": "int",
+		"Ranges": [{"min": -108000000, "max": 108000000}],
+		"Values": []
+	},
+
+	"Latitude": {
+		"Check": true,
+		"Type": "int",
+		"Ranges": [{"min": -54000000, "max": 54600000}],
+		"Values": []
+	},
+
+	"Course Over Ground": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [{"min": 0, "max": 3599}],
+		"Values": [3600]
+	},
+
+	"Time Stamp": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [{"min": 0, "max": 59}],
+		"Values": [60, 61, 62, 63]
+	},
+
+	"Altitude Sensor": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Spare": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [],
+		"Values": []
+	},
+
+	"Data Terminal Equipment Flag": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Assigned Mode Flag": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"RAIM Flag": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Radio Status": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [],
+		"Values": []
+	}
+}

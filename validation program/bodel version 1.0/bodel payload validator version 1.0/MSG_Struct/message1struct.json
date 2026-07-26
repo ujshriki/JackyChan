@@ -1,0 +1,70 @@
+{
+	"Field Order File Name":"message1structorder.txt",
+	
+	"Message Type": {
+		"Type": "u_int",
+		"Length": 6,
+		"Message Type": 1,
+		"Part":"",
+		"Message Type Has Parts": [] },
+	
+	"Repeat Indicator": {
+		"Type": "u_int",
+		"Length": 2},
+
+	"MMSI": {
+		"Type": "u_int",
+		"Length": 30},
+	
+	"Navigation Status": {
+		"Type": "u_int",
+		"Length": 4},
+	
+	"Rate of Turn": {
+		"Type": "int",
+		"Length": 8},
+
+	"Speed Over Ground": {
+		"Type": "u_int",
+		"Length": 10},
+	
+	"Position Accuracy": {
+		"Type": "bool",
+		"Length": 1},
+	
+	"Longitude": {
+		"Type": "int",
+		"Length": 28},
+
+	"Latitude": {
+		"Type": "int",
+		"Length": 27},
+
+	"Course Over Ground": {
+		"Type": "u_int",
+		"Length": 12},
+
+	"True Heading": {
+		"Type": "u_int",
+		"Length": 9},
+
+	"Time Stamp": {
+		"Type": "u_int",
+		"Length": 6},
+
+	"Maneuver Indicator": {
+		"Type": "u_int",
+		"Length": 2},
+
+	"Spare": {
+		"Type": "u_int",
+		"Length": 3},
+
+	"RAIM flag": {
+		"Type": "bool",
+		"Length": 1},
+
+	"Radio status": {
+		"Type": "u_int",
+		"Length": 19}
+}

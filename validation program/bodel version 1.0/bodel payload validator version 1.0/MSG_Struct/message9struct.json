@@ -1,0 +1,86 @@
+{
+	"Field Order File Name": "message9structorder.txt",
+
+	"Message Type": {
+		"Type": "u_int",
+		"Length": 6,
+		"Message Type": 9,
+		"Part": "",
+		"Message Type Has Parts": []
+	},
+
+	"Repeat Indicator": {
+		"Type": "u_int",
+		"Length": 2
+	},
+
+	"MMSI": {
+		"Type": "u_int",
+		"Length": 30
+	},
+
+	"Altitude": {
+		"Type": "u_int",
+		"Length": 12
+	},
+
+	"Speed Over Ground": {
+		"Type": "u_int",
+		"Length": 10
+	},
+
+	"Position Accuracy": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Longitude": {
+		"Type": "int",
+		"Length": 28
+	},
+
+	"Latitude": {
+		"Type": "int",
+		"Length": 27
+	},
+
+	"Course Over Ground": {
+		"Type": "u_int",
+		"Length": 12
+	},
+
+	"Time Stamp": {
+		"Type": "u_int",
+		"Length": 6
+	},
+
+	"Altitude Sensor": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Spare": {
+		"Type": "u_int",
+		"Length": 7
+	},
+
+	"Data Terminal Equipment Flag": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Assigned Mode Flag": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"RAIM Flag": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Radio Status": {
+		"Type": "u_int",
+		"Length": 19
+	}
+}

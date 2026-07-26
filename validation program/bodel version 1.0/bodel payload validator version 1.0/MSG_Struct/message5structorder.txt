@@ -1,0 +1,21 @@
+Message Type
+Repeat Indicator
+MMSI
+AIS Version
+IMO Number
+Call Sign
+Vessel Name
+Ship Type
+DtB
+DtS
+DtP
+DtSB
+Position Fix Type
+ETA month
+ETA day
+ETA hour
+ETA minute
+Draught
+Destination
+DTE
+Spare

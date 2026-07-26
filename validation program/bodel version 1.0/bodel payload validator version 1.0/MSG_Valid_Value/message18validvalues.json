@@ -1,0 +1,145 @@
+{
+	"Field Order File Name": "message18validvaluesorder.txt",
+
+	"Message Type": {
+		"Check": true,
+		"Message Type": 18,
+		"Is a Part?": false,
+		"Part": ""
+	},
+
+	"Repeat Indicator": {
+		"Check": true,
+		"Type": "u_int",
+		"Ranges": [{"min": 0, "max": 3}],
+		"Values": []
+	},
+
+	"MMSI": {
+		"Check": true,
+		"Type": "u_int",
+		"Ranges": [
+			{"min": 201000000, "max": 775999999}
+		],
+		"Values": []
+	},
+
+	"Reserved": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [],
+		"Values": []
+	},
+
+	"Speed Over Ground": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [{"min": 0, "max": 1022}],
+		"Values": [1023]
+	},
+
+	"Position Accuracy": {
+		"Check": true,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Longitude": {
+		"Check": true,
+		"Type": "int",
+		"Ranges": [{"min": -108000000, "max": 108000000}],
+		"Values": []
+	},
+
+	"Latitude": {
+		"Check": true,
+		"Type": "int",
+		"Ranges": [{"min": -54000000, "max": 54600000}],
+		"Values": []
+	},
+
+	"Course Over Ground": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [{"min": 0, "max": 3599}],
+		"Values": [3600]
+	},
+
+	"True Heading": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [{"min": 0, "max": 359}],
+		"Values": [511]
+	},
+
+	"Time Stamp": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [{"min": 0, "max": 59}],
+		"Values": [60, 61, 62, 63]
+	},
+
+	"Reserved for Regional Use": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [],
+		"Values": []
+	},
+
+	"CS Unit Flag": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Display Flag": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Digital Selective Calling Flag": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Band Flag": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Message 22 Flag": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Assigned Mode Flag": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"RAIM Flag": {
+		"Check": false,
+		"Type": "bool",
+		"Ranges": [],
+		"Values": [0, 1]
+	},
+
+	"Radio Status": {
+		"Check": false,
+		"Type": "u_int",
+		"Ranges": [],
+		"Values": []
+	}
+}

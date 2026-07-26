@@ -1,0 +1,90 @@
+{
+	"Field Order File Name":"message5structorder.txt",
+	
+	"Message Type": {
+		"Type": "u_int",
+		"Length": 6,
+		"Message Type": 5,
+		"Part":"",
+		"Message Type Has Parts": [] },
+	
+	"Repeat Indicator": {
+		"Type": "u_int",
+		"Length": 2},
+
+	"MMSI": {
+		"Type": "u_int",
+		"Length": 30},
+	
+	"AIS Version": {
+		"Type": "u_int",
+		"Length": 2},
+	
+	"IMO Number": {
+		"Type": "u_int",
+		"Length": 30},
+
+	"Call Sign": {
+		"Type": "str",
+		"Length": 42},
+	
+	"Vessel Name": {
+		"Type": "str",
+		"Length": 120},
+	
+	"Ship Type": {
+		"Type": "u_int",
+		"Length": 8},
+
+	"DtB": {
+		"Type": "int",
+		"Length": 9},
+
+	"DtS": {
+		"Type": "u_int",
+		"Length": 9},
+
+	"DtP": {
+		"Type": "u_int",
+		"Length": 6},
+
+	"DtSB": {
+		"Type": "u_int",
+		"Length": 6},
+
+	"Position Fix Type": {
+		"Type": "u_int",
+		"Length": 4},
+
+	"ETA month": {
+		"Type": "u_int",
+		"Length": 4},
+
+	"ETA day": {
+		"Type": "u_int",
+		"Length": 5},
+
+	"ETA hour": {
+		"Type": "u_int",
+		"Length": 5},
+		
+	"ETA minute": {
+		"Type": "u_int",
+		"Length": 6},
+		
+	"Draught": {
+		"Type": "u_int",
+		"Length": 8},
+		
+	"Destination": {
+		"Type": "str",
+		"Length": 120},
+		
+	"DTE": {
+		"Type": "bool",
+		"Length": 1},
+		
+	"Spare": {
+		"Type": "u_int",
+		"Length": 1}
+}

@@ -1,0 +1,30 @@
+{
+	"Field Order File Name":"message24Astructorder.txt",
+	
+	"Message Type": {
+		"Type": "u_int",
+		"Length": 6,
+		"Message Type": 24,
+		"Part": "A",
+		"Message Type Has Parts": [] },
+	
+	"Repeat Indicator": {
+		"Type": "u_int",
+		"Length": 2},
+
+	"MMSI": {
+		"Type": "u_int",
+		"Length": 30},
+	
+	"Part": {
+		"Type": "u_int",
+		"Length": 2},
+	
+	"Vessel Name": {
+		"Type": "str",
+		"Length": 120},
+	
+	"Spare": {
+		"Type": "u_int",
+		"Length": 6}
+}

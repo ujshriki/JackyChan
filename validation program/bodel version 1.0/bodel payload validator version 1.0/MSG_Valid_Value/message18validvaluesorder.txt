@@ -1,0 +1,20 @@
+Message Type
+Repeat Indicator
+MMSI
+Reserved
+Speed Over Ground
+Position Accuracy
+Longitude
+Latitude
+Course Over Ground
+True Heading
+Time Stamp
+Reserved for Regional Use
+CS Unit Flag
+Display Flag
+Digital Selective Calling Flag
+Band Flag
+Message 22 Flag
+Assigned Mode Flag
+RAIM Flag
+Radio Status

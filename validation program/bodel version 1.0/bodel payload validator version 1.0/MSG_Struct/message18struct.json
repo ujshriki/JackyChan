@@ -1,0 +1,106 @@
+{
+	"Field Order File Name": "message18structorder.txt",
+
+	"Message Type": {
+		"Type": "u_int",
+		"Length": 6,
+		"Message Type": 18,
+		"Part": "",
+		"Message Type Has Parts": []
+	},
+
+	"Repeat Indicator": {
+		"Type": "u_int",
+		"Length": 2
+	},
+
+	"MMSI": {
+		"Type": "u_int",
+		"Length": 30
+	},
+
+	"Reserved": {
+		"Type": "u_int",
+		"Length": 8
+	},
+
+	"Speed Over Ground": {
+		"Type": "u_int",
+		"Length": 10
+	},
+
+	"Position Accuracy": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Longitude": {
+		"Type": "int",
+		"Length": 28
+	},
+
+	"Latitude": {
+		"Type": "int",
+		"Length": 27
+	},
+
+	"Course Over Ground": {
+		"Type": "u_int",
+		"Length": 12
+	},
+
+	"True Heading": {
+		"Type": "u_int",
+		"Length": 9
+	},
+
+	"Time Stamp": {
+		"Type": "u_int",
+		"Length": 6
+	},
+
+	"Reserved for Regional Use": {
+		"Type": "u_int",
+		"Length": 2
+	},
+
+	"CS Unit Flag": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Display Flag": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Digital Selective Calling Flag": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Band Flag": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Message 22 Flag": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Assigned Mode Flag": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"RAIM Flag": {
+		"Type": "bool",
+		"Length": 1
+	},
+
+	"Radio Status": {
+		"Type": "u_int",
+		"Length": 20
+	}
+}

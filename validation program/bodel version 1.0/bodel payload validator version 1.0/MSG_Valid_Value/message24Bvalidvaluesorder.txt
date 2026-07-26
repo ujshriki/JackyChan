@@ -1,0 +1,13 @@
+Message Type
+Repeat Indicator
+MMSI
+Part
+Ship Type
+Vendor ID
+Call Sign
+DtB
+DtS
+DtP
+DtSB
+Mothership MMSI
+Spare

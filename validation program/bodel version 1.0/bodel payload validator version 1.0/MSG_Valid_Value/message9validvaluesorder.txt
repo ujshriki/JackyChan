@@ -1,0 +1,16 @@
+Message Type
+Repeat Indicator
+MMSI
+Altitude
+Speed Over Ground
+Position Accuracy
+Longitude
+Latitude
+Course Over Ground
+Time Stamp
+Altitude Sensor
+Spare
+Data Terminal Equipment Flag
+Assigned Mode Flag
+RAIM Flag
+Radio Status
